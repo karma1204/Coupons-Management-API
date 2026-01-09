@@ -1,0 +1,9 @@
+package com.commerce.coupons.enums;
+
+public enum CouponType {
+    CART_WISE_PERCENTAGE_DISCOUNT,
+    CART_WISE_FIXED_AMOUNT_DISCOUNT,
+    PRODUCT_WISE_PERCENTAGE_DISCOUNT,
+    PRODUCT_WISE_FIXED_AMOUNT_DISCOUNT,
+    BUY_X_GET_Y
+}
