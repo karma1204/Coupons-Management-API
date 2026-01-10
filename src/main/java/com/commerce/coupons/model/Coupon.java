@@ -17,9 +17,6 @@ import java.util.UUID;
     )
 @Getter
 @Setter
-@NoArgsConstructor
-@AllArgsConstructor
-@Builder
 public class Coupon extends BaseEntity{
 
   @Id
@@ -47,5 +44,27 @@ public class Coupon extends BaseEntity{
   private Instant validFrom;
 
   @Column
-  private Instant validTill; // nullable means no expiration or a long time in the future
+  private Instant validTill; // null means no expiration or a long time in the future
+
+  @PrePersist
+  @PreUpdate
+  private void validateValidity() {
+    if (validTill != null && validTill.isBefore(validFrom)) {
+      throw new IllegalStateException(
+          "validTill cannot be before validFrom"
+      );
+    }
+  }
+
+  @Builder
+  public Coupon(CouponType type, String name, String code, String details,
+                boolean active, Instant validFrom, Instant validTill) {
+    this.type = type;
+    this.name = name;
+    this.code = code;
+    this.details = details;
+    this.active = active;
+    this.validFrom = validFrom;
+    this.validTill = validTill;
+  }
 }
