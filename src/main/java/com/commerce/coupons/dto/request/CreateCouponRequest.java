@@ -1,6 +1,7 @@
-package com.commerce.coupons.dto;
+package com.commerce.coupons.dto.request;
 
 import com.commerce.coupons.enums.CouponType;
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.AssertTrue;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -14,7 +15,7 @@ import java.time.Instant;
 @Getter
 @Setter
 @NoArgsConstructor
-public class CreateCoupon {
+public class CreateCouponRequest {
 
   @NotNull(message = "Coupon type is required")
   private CouponType type;
@@ -48,9 +49,19 @@ public class CreateCoupon {
    */
   private Instant validTill;
 
+  @Valid
+  private BuyXGetYRuleRequest buyXGetYRule;
+
   @AssertTrue(message = "validTill cannot be before validFrom")
   public boolean isValidDateRange() {
     return validTill == null || !validTill.isBefore(validFrom);
   }
 
+  @AssertTrue(message = "BUY_X_GET_Y coupons must have BuyXGetY rule")
+  public boolean isBuyXGetYRuleValid() {
+    if (type == CouponType.BUY_X_GET_Y) {
+      return buyXGetYRule != null;
+    }
+    return buyXGetYRule == null;
+  }
 }
