@@ -1,6 +1,8 @@
 package com.commerce.coupons.model;
 
 import com.commerce.coupons.enums.CouponType;
+import com.commerce.coupons.model.rules.BuyXGetYRule;
+import com.commerce.coupons.model.validator.CouponTypeValidator;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -17,6 +19,7 @@ import java.util.UUID;
     )
 @Getter
 @Setter
+@NoArgsConstructor
 public class Coupon extends BaseEntity{
 
   @Id
@@ -46,6 +49,9 @@ public class Coupon extends BaseEntity{
   @Column
   private Instant validTill; // null means no expiration or a long time in the future
 
+  @Embedded
+  private BuyXGetYRule buyXGetYRule;
+
   @PrePersist
   @PreUpdate
   private void validateValidity() {
@@ -56,9 +62,16 @@ public class Coupon extends BaseEntity{
     }
   }
 
+  @PrePersist
+  @PreUpdate
+  private void validateCouponConfiguration() {
+    CouponTypeValidator.validate(this);
+  }
+
   @Builder
   public Coupon(CouponType type, String name, String code, String details,
-                boolean active, Instant validFrom, Instant validTill) {
+                boolean active, Instant validFrom, Instant validTill,
+                BuyXGetYRule buyXGetYRule) {
     this.type = type;
     this.name = name;
     this.code = code;
@@ -66,5 +79,6 @@ public class Coupon extends BaseEntity{
     this.active = active;
     this.validFrom = validFrom;
     this.validTill = validTill;
+    this.buyXGetYRule = buyXGetYRule;
   }
 }
