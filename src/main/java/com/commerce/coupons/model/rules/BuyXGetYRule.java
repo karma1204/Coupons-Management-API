@@ -2,10 +2,16 @@ package com.commerce.coupons.model.rules;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.UUID;
 
 @Embeddable
+@Getter
+@Setter
+@AllArgsConstructor
 public class BuyXGetYRule {
 
   /*
