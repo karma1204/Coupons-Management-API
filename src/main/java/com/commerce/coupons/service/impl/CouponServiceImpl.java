@@ -7,11 +7,13 @@ import com.commerce.coupons.model.Coupon;
 import com.commerce.coupons.model.rules.BuyXGetYRule;
 import com.commerce.coupons.repository.CouponRepository;
 import com.commerce.coupons.service.CouponService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @Transactional
+@Slf4j
 public class CouponServiceImpl implements CouponService {
 
   private final CouponRepository couponRepository;
@@ -22,7 +24,7 @@ public class CouponServiceImpl implements CouponService {
 
   @Override
   public CouponResponse createCoupon(CreateCouponRequest request) {
-
+    log.info("Creating coupon with code={}", request.getCode());
     Coupon.CouponBuilder builder = Coupon.builder()
         .type(request.getType())
         .name(request.getName())
@@ -38,8 +40,9 @@ public class CouponServiceImpl implements CouponService {
     }
 
     Coupon coupon = builder.build();
-
-    return CouponResponse.from(couponRepository.save(coupon));
+    couponRepository.save(coupon);
+    log.info("Created coupon - {} : {}", coupon.getId(), coupon.getName());
+    return CouponResponse.from(coupon);
   }
 
   private BuyXGetYRule mapBuyXGetYRule(BuyXGetYRuleRequest ruleRequest) {

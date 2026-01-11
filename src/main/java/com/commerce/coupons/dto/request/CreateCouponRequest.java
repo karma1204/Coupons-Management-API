@@ -40,6 +40,10 @@ public class CreateCouponRequest {
   @NotNull(message = "Active flag must be specified")
   private Boolean active;
 
+  /**
+   * Using Instant so a coupon can have validity starting at a specific time of day
+   * Like a flash sale starting at midnight or noon.
+   */
   @NotNull(message = "validFrom is required")
   private Instant validFrom;
 
@@ -52,8 +56,13 @@ public class CreateCouponRequest {
   @Valid
   private BuyXGetYRuleRequest buyXGetYRule;
 
+  @AssertTrue(message = "validFrom must be in the future")
+  public boolean isValidFromInFuture() {
+    return validFrom != null && validFrom.isAfter(Instant.now().minusSeconds(5));
+  }
+
   @AssertTrue(message = "validTill cannot be before validFrom")
-  public boolean isValidDateRange() {
+  public boolean isValidTillAfterValidFrom() {
     return validTill == null || !validTill.isBefore(validFrom);
   }
 
