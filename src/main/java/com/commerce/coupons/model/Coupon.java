@@ -52,8 +52,13 @@ public class Coupon extends BaseEntity{
   @Embedded
   private BuyXGetYRule buyXGetYRule;
 
-  @PrePersist
-  @PreUpdate
+  @Override
+  protected void validate() {
+    super.validate();
+    validateValidity();
+    validateCouponConfiguration();
+  }
+
   private void validateValidity() {
     if (validTill != null && validTill.isBefore(validFrom)) {
       throw new IllegalStateException(
@@ -62,8 +67,6 @@ public class Coupon extends BaseEntity{
     }
   }
 
-  @PrePersist
-  @PreUpdate
   private void validateCouponConfiguration() {
     CouponTypeValidator.validate(this);
   }

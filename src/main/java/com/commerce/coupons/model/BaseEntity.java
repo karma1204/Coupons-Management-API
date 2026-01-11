@@ -21,10 +21,17 @@ public class BaseEntity {
     Instant now = Instant.now();
     this.createdAt = now;
     this.updatedAt = now;
+    validate();
   }
 
   @PreUpdate
   protected void onUpdate() {
     this.updatedAt = Instant.now();
+    validate();
+  }
+
+  protected void validate() {
+    // Default implementation does nothing.
+    // Subclasses can override this method to implement custom validation logic.
   }
 }
