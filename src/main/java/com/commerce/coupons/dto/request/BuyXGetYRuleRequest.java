@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
 import java.util.UUID;
 
 @Getter
@@ -13,8 +14,8 @@ import java.util.UUID;
 @NoArgsConstructor
 public class BuyXGetYRuleRequest {
 
-  @NotNull(message = "productId is required")
-  private UUID productId;
+  @NotNull(message = "productIds is required")
+  private List<UUID> productIds;
 
   @NotNull(message = "buyQuantity is required")
   @Min(value = 1, message = "buyQuantity must be at least 1")

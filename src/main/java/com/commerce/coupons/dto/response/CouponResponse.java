@@ -41,7 +41,7 @@ public class CouponResponse {
 
   private static BuyXGetYRuleResponse mapBuyXGetYRule(BuyXGetYRule rule) {
     return new BuyXGetYRuleResponse(
-        rule.getProductId(),
+        rule.getProductIds(),
         rule.getBuyQuantity(),
         rule.getGetQuantity()
     );

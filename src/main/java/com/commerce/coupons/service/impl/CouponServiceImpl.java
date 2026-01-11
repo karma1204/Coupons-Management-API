@@ -47,7 +47,7 @@ public class CouponServiceImpl implements CouponService {
 
   private BuyXGetYRule mapBuyXGetYRule(BuyXGetYRuleRequest ruleRequest) {
     return new BuyXGetYRule(
-        ruleRequest.getProductId(),
+        ruleRequest.getProductIds(),
         ruleRequest.getBuyQuantity(),
         ruleRequest.getGetQuantity()
     );
