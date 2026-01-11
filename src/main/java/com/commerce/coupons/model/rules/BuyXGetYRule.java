@@ -17,6 +17,7 @@ public class BuyXGetYRule {
   /*
   * Assuming we are applying this rule to a specific product only.
   * If needed, this can be extended to a list of products or categories.
+  * productId should be a foreign key reference to the products table in a full implementation.
   */
   @Column(nullable = false)
   private UUID productId;
