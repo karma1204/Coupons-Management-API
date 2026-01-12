@@ -2,7 +2,6 @@ package com.commerce.coupons.model;
 
 import com.commerce.coupons.enums.CouponType;
 import com.commerce.coupons.model.rules.BuyXGetYRule;
-import com.commerce.coupons.model.validator.CouponTypeValidator;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -56,7 +55,6 @@ public class Coupon extends BaseEntity{
   protected void validate() {
     super.validate();
     validateValidity();
-    validateCouponConfiguration();
   }
 
   private void validateValidity() {
@@ -70,10 +68,6 @@ public class Coupon extends BaseEntity{
           "validTill cannot be before validFrom"
       );
     }
-  }
-
-  private void validateCouponConfiguration() {
-    CouponTypeValidator.validate(this);
   }
 
   @Builder

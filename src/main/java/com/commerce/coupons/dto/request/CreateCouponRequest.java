@@ -65,12 +65,4 @@ public class CreateCouponRequest {
   public boolean isValidTillAfterValidFrom() {
     return validTill == null || !validTill.isBefore(validFrom);
   }
-
-  @AssertTrue(message = "BUY_X_GET_Y coupons must have BuyXGetY rule")
-  public boolean isBuyXGetYRuleValid() {
-    if (type == CouponType.BUY_X_GET_Y) {
-      return buyXGetYRule != null;
-    }
-    return buyXGetYRule == null;
-  }
 }

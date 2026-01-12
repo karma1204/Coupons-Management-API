@@ -5,6 +5,7 @@ import com.commerce.coupons.dto.response.CouponResponse;
 import com.commerce.coupons.service.CouponService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ProblemDetail;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -28,5 +29,15 @@ public class CouponController {
     return ResponseEntity
         .status(HttpStatus.CREATED)
         .body(coupon);
+  }
+
+  @ExceptionHandler(IllegalArgumentException.class)
+  @ResponseStatus(HttpStatus.BAD_REQUEST)
+  public ResponseEntity<ProblemDetail> handleIllegalArgument(IllegalArgumentException ex) {
+    return ResponseEntity.badRequest()
+        .body(ProblemDetail.forStatusAndDetail(
+            HttpStatus.BAD_REQUEST,
+            ex.getMessage()
+        ));
   }
 }
