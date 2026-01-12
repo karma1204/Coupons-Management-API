@@ -4,13 +4,13 @@ import com.commerce.coupons.model.entity.ProductQuantity;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
-import java.util.List;
+import java.util.Set;
 
 @AllArgsConstructor
 @Getter
 public class BuyXGetYRuleResponse {
 
-  private List<ProductQuantity> buyProducts;
-  private List<ProductQuantity> getProducts;
+  private Set<ProductQuantity> buyProducts;
+  private Set<ProductQuantity> getProducts;
   private int repetitionLimit;
 }

@@ -21,7 +21,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -90,6 +92,33 @@ public class CouponServiceImpl implements CouponService {
     );
   }
 
+  @Override
+  public CouponResponse updateCoupon(UUID id, CreateCouponRequest request) {
+    Coupon coupon = couponRepository.findById(id)
+        .orElseThrow(() -> {
+          log.warn("Coupon not found with id {}", id);
+          return new EntityNotFoundException("Coupon not found with id " + id);
+        });
+
+    log.info("Updating coupon with id={}", id);
+    coupon.setType(request.getType());
+    coupon.setName(request.getName());
+    coupon.setCode(request.getCode().toUpperCase());
+    coupon.setDetails(request.getDetails());
+    coupon.setActive(request.getActive());
+    coupon.setValidFrom(request.getValidFrom());
+    coupon.setValidTill(request.getValidTill());
+
+    // Update rule based on type
+    switch (request.getType()) {
+      case BUY_X_GET_Y -> coupon.setBuyXGetYRule(mapBuyXGetYRule(request.getBuyXGetYRule()));
+    }
+
+    couponRepository.save(coupon);
+    log.info("Updated coupon - {} : {}", coupon.getId(), coupon.getName());
+    return CouponResponse.from(coupon);
+  }
+
   private BuyXGetYRule mapBuyXGetYRule(BuyXGetYRuleRequest req) {
     return new BuyXGetYRule(
         mapProducts(req.getBuyProducts()),
@@ -98,12 +127,12 @@ public class CouponServiceImpl implements CouponService {
     );
   }
 
-  private List<ProductQuantity> mapProducts(
-      List<ProductQuantityDTO> dtos
+  private Set<ProductQuantity> mapProducts(
+      Set<ProductQuantityDTO> dtos
   ) {
     return dtos.stream()
         .map(dto -> new ProductQuantity(dto.getProductId(), dto.getQuantity()))
-        .toList();
+        .collect(Collectors.toSet());
   }
 
   private Specification<Coupon> couponsCriteria(Boolean active, String code, CouponType type) {

@@ -6,7 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
+import java.util.Set;
 
 @Embeddable
 @Getter
@@ -19,14 +19,14 @@ public class BuyXGetYRule {
       name = "bxgy_buy_products",
       joinColumns = @JoinColumn(name = "coupon_id")
   )
-  private List<ProductQuantity> buyProducts;
+  private Set<ProductQuantity> buyProducts;
 
   @ElementCollection
   @CollectionTable(
       name = "bxgy_get_products",
       joinColumns = @JoinColumn(name = "coupon_id")
   )
-  private List<ProductQuantity> getProducts;
+  private Set<ProductQuantity> getProducts;
 
   @Column(nullable = false)
   private int repetitionLimit;

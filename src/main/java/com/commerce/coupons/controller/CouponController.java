@@ -54,4 +54,13 @@ public class CouponController {
     );
     return ResponseEntity.ok(coupons);
   }
+
+  @PutMapping("/{id}")
+  public ResponseEntity<CouponResponse> updateCoupon(
+      @PathVariable UUID id,
+      @Valid @RequestBody CreateCouponRequest request
+  ) {
+    CouponResponse updatedCoupon = couponService.updateCoupon(id, request);
+    return ResponseEntity.ok(updatedCoupon);
+  }
 }

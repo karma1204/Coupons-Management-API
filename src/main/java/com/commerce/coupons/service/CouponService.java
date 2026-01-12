@@ -14,4 +14,6 @@ public interface CouponService {
   CouponResponse getCouponById(UUID id);
 
   CouponsResponse getCoupons(int offset, int limit, Boolean active, String code, CouponType type);
+
+  CouponResponse updateCoupon(UUID id, CreateCouponRequest request);
 }

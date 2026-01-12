@@ -8,7 +8,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.List;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -16,10 +16,10 @@ import java.util.List;
 public class BuyXGetYRuleRequest {
 
   @NotEmpty(message = "Purchase products list cannot be empty")
-  private List<@Valid ProductQuantityDTO> buyProducts;
+  private Set<@Valid ProductQuantityDTO> buyProducts;
 
   @NotEmpty(message = "Get products list cannot be empty")
-  private List<@Valid ProductQuantityDTO> getProducts;
+  private Set<@Valid ProductQuantityDTO> getProducts;
 
   @Min(value = 1, message = "Repetition limit must be at least 1")
   private int repetitionLimit;
