@@ -7,9 +7,12 @@ import com.commerce.coupons.model.Coupon;
 import com.commerce.coupons.model.rules.BuyXGetYRule;
 import com.commerce.coupons.repository.CouponRepository;
 import com.commerce.coupons.service.CouponService;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.UUID;
 
 @Service
 @Transactional
@@ -42,6 +45,17 @@ public class CouponServiceImpl implements CouponService {
     Coupon coupon = builder.build();
     couponRepository.save(coupon);
     log.info("Created coupon - {} : {}", coupon.getId(), coupon.getName());
+    return CouponResponse.from(coupon);
+  }
+
+  @Override
+  public CouponResponse getCouponById(UUID id){
+    Coupon coupon = couponRepository.findById(id)
+        .orElseThrow(() -> {
+          log.warn("Coupon not found with id {}", id);
+          return new EntityNotFoundException("Coupon not found with id " + id);
+        });
+    log.info("Fetched coupon by id {}", id);
     return CouponResponse.from(coupon);
   }
 

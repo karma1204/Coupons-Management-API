@@ -4,6 +4,7 @@ import com.commerce.coupons.dto.request.CreateCouponRequest;
 import com.commerce.coupons.dto.response.CouponResponse;
 import com.commerce.coupons.service.CouponService;
 import jakarta.validation.Valid;
+import jakarta.websocket.server.PathParam;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -28,5 +29,14 @@ public class CouponController {
     return ResponseEntity
         .status(HttpStatus.CREATED)
         .body(coupon);
+  }
+
+
+  @GetMapping("/{id}")
+  public ResponseEntity<CouponResponse> getCouponById(
+      @PathVariable UUID id
+  ) {
+    CouponResponse coupon = couponService.getCouponById(id);
+    return ResponseEntity.ok(coupon);
   }
 }
