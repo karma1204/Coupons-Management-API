@@ -1,10 +1,11 @@
 package com.commerce.coupons.controller;
 
 import com.commerce.coupons.dto.request.CreateCouponRequest;
+import com.commerce.coupons.dto.response.CouponsResponse;
 import com.commerce.coupons.dto.response.CouponResponse;
+import com.commerce.coupons.enums.CouponType;
 import com.commerce.coupons.service.CouponService;
 import jakarta.validation.Valid;
-import jakarta.websocket.server.PathParam;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -38,5 +39,19 @@ public class CouponController {
   ) {
     CouponResponse coupon = couponService.getCouponById(id);
     return ResponseEntity.ok(coupon);
+  }
+
+  @GetMapping
+  public ResponseEntity<CouponsResponse> getCoupons(
+      @RequestParam(defaultValue = "0") int offset,
+      @RequestParam(defaultValue = "20") int limit,
+      @RequestParam(required = false) Boolean active,
+      @RequestParam(required = false) String code,
+      @RequestParam(required = false) CouponType type
+  ) {
+    CouponsResponse coupons = couponService.getCoupons(
+        offset, limit, active, code, type
+    );
+    return ResponseEntity.ok(coupons);
   }
 }

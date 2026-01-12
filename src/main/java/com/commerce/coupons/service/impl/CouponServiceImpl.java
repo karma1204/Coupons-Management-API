@@ -3,15 +3,22 @@ package com.commerce.coupons.service.impl;
 import com.commerce.coupons.dto.request.CreateCouponRequest;
 import com.commerce.coupons.dto.request.BuyXGetYRuleRequest;
 import com.commerce.coupons.dto.response.CouponResponse;
+import com.commerce.coupons.dto.response.CouponsResponse;
+import com.commerce.coupons.enums.CouponType;
 import com.commerce.coupons.model.Coupon;
 import com.commerce.coupons.model.rules.BuyXGetYRule;
 import com.commerce.coupons.repository.CouponRepository;
 import com.commerce.coupons.service.CouponService;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -31,7 +38,7 @@ public class CouponServiceImpl implements CouponService {
     Coupon.CouponBuilder builder = Coupon.builder()
         .type(request.getType())
         .name(request.getName())
-        .code(request.getCode())
+        .code(request.getCode().toUpperCase())
         .details(request.getDetails())
         .active(request.getActive())
         .validFrom(request.getValidFrom())
@@ -59,11 +66,53 @@ public class CouponServiceImpl implements CouponService {
     return CouponResponse.from(coupon);
   }
 
+  @Override
+  public CouponsResponse getCoupons(int offset, int limit, Boolean active, String code, CouponType type) {
+    PageRequest pageRequest = PageRequest.of(
+        offset / limit,
+        limit,
+        Sort.by("createdAt").descending()
+    );
+    Specification<Coupon> spec = couponsCriteria(active, code, type);
+
+    Page<Coupon> page = couponRepository.findAll(spec, pageRequest);
+    List<CouponResponse> coupons = page.getContent()
+        .stream()
+        .map(CouponResponse::from)
+        .toList();
+    log.info("Fetched {} coupons with filters - active: {}, code: {}, type: {}", coupons.size(), active, code, type);
+    return new CouponsResponse(
+        coupons,
+        (int) page.getTotalElements(),
+        page.hasNext()
+    );
+  }
+
   private BuyXGetYRule mapBuyXGetYRule(BuyXGetYRuleRequest ruleRequest) {
     return new BuyXGetYRule(
         ruleRequest.getProductIds(),
         ruleRequest.getBuyQuantity(),
         ruleRequest.getGetQuantity()
     );
+  }
+
+  private Specification<Coupon> couponsCriteria(Boolean active, String code, CouponType type) {
+    return (root, query, cb) -> {
+      var predicates = cb.conjunction();
+
+      if (code != null && !code.isBlank()) {
+        predicates = cb.and(predicates, cb.equal(cb.upper(root.get("code")), code.toUpperCase()));
+      }
+
+      if (type != null) {
+        predicates = cb.and(predicates, cb.equal(root.get("type"), type));
+      }
+
+      if (active != null) {
+        predicates = cb.and(predicates, cb.equal(root.get("active"), active));
+      }
+
+      return predicates;
+    };
   }
 }
