@@ -119,6 +119,16 @@ public class CouponServiceImpl implements CouponService {
     return CouponResponse.from(coupon);
   }
 
+  @Override
+  public void deleteCoupon(UUID id) {
+    if (!couponRepository.existsById(id)) {
+      log.warn("Coupon not found with id {}", id);
+      throw new EntityNotFoundException("Coupon not found with id " + id);
+    }
+    couponRepository.deleteById(id);
+    log.info("Deleted coupon with id {}", id);
+  }
+
   private BuyXGetYRule mapBuyXGetYRule(BuyXGetYRuleRequest req) {
     return new BuyXGetYRule(
         mapProducts(req.getBuyProducts()),

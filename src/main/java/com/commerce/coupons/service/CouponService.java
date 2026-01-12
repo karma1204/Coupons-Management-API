@@ -16,4 +16,6 @@ public interface CouponService {
   CouponsResponse getCoupons(int offset, int limit, Boolean active, String code, CouponType type);
 
   CouponResponse updateCoupon(UUID id, CreateCouponRequest request);
+
+  void deleteCoupon(UUID id);
 }

@@ -63,4 +63,12 @@ public class CouponController {
     CouponResponse updatedCoupon = couponService.updateCoupon(id, request);
     return ResponseEntity.ok(updatedCoupon);
   }
+
+  @DeleteMapping("/{id}")
+  public ResponseEntity<Void> deleteCoupon(
+      @PathVariable UUID id
+  ) {
+    couponService.deleteCoupon(id);
+    return ResponseEntity.noContent().build();
+  }
 }
