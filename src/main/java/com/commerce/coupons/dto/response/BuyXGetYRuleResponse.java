@@ -1,16 +1,16 @@
 package com.commerce.coupons.dto.response;
 
+import com.commerce.coupons.model.entity.ProductQuantity;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 import java.util.List;
-import java.util.UUID;
 
 @AllArgsConstructor
 @Getter
 public class BuyXGetYRuleResponse {
 
-  private List<UUID> productIds;
-  private int buyQuantity;
-  private int getQuantity;
+  private List<ProductQuantity> buyProducts;
+  private List<ProductQuantity> getProducts;
+  private int repetitionLimit;
 }

@@ -1,27 +1,26 @@
 package com.commerce.coupons.dto.request;
 
+import com.commerce.coupons.dto.common.ProductQuantityDTO;
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.NotEmpty;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.List;
-import java.util.UUID;
 
 @Getter
 @Setter
 @NoArgsConstructor
 public class BuyXGetYRuleRequest {
 
-  @NotNull(message = "productIds is required")
-  private List<UUID> productIds;
+  @NotEmpty(message = "Purchase products list cannot be empty")
+  private List<@Valid ProductQuantityDTO> buyProducts;
 
-  @NotNull(message = "buyQuantity is required")
-  @Min(value = 1, message = "buyQuantity must be at least 1")
-  private Integer buyQuantity;
+  @NotEmpty(message = "Get products list cannot be empty")
+  private List<@Valid ProductQuantityDTO> getProducts;
 
-  @NotNull(message = "getQuantity is required")
-  @Min(value = 1, message = "getQuantity must be at least 1")
-  private Integer getQuantity;
+  @Min(value = 1, message = "Repetition limit must be at least 1")
+  private int repetitionLimit;
 }

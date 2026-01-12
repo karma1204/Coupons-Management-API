@@ -41,9 +41,9 @@ public class CouponResponse {
 
   private static BuyXGetYRuleResponse mapBuyXGetYRule(BuyXGetYRule rule) {
     return new BuyXGetYRuleResponse(
-        rule.getProductIds(),
-        rule.getBuyQuantity(),
-        rule.getGetQuantity()
+        rule.getBuyProducts(),
+        rule.getGetProducts(),
+        rule.getRepetitionLimit()
     );
   }
 }

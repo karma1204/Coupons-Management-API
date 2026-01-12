@@ -1,11 +1,13 @@
 package com.commerce.coupons.service.impl;
 
+import com.commerce.coupons.dto.common.ProductQuantityDTO;
 import com.commerce.coupons.dto.request.CreateCouponRequest;
 import com.commerce.coupons.dto.request.BuyXGetYRuleRequest;
 import com.commerce.coupons.dto.response.CouponResponse;
 import com.commerce.coupons.dto.response.CouponsResponse;
 import com.commerce.coupons.enums.CouponType;
 import com.commerce.coupons.model.Coupon;
+import com.commerce.coupons.model.entity.ProductQuantity;
 import com.commerce.coupons.model.rules.BuyXGetYRule;
 import com.commerce.coupons.repository.CouponRepository;
 import com.commerce.coupons.service.CouponService;
@@ -88,12 +90,20 @@ public class CouponServiceImpl implements CouponService {
     );
   }
 
-  private BuyXGetYRule mapBuyXGetYRule(BuyXGetYRuleRequest ruleRequest) {
+  private BuyXGetYRule mapBuyXGetYRule(BuyXGetYRuleRequest req) {
     return new BuyXGetYRule(
-        ruleRequest.getProductIds(),
-        ruleRequest.getBuyQuantity(),
-        ruleRequest.getGetQuantity()
+        mapProducts(req.getBuyProducts()),
+        mapProducts(req.getGetProducts()),
+        req.getRepetitionLimit()
     );
+  }
+
+  private List<ProductQuantity> mapProducts(
+      List<ProductQuantityDTO> dtos
+  ) {
+    return dtos.stream()
+        .map(dto -> new ProductQuantity(dto.getProductId(), dto.getQuantity()))
+        .toList();
   }
 
   private Specification<Coupon> couponsCriteria(Boolean active, String code, CouponType type) {
