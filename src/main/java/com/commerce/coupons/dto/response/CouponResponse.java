@@ -23,7 +23,7 @@ public class CouponResponse {
   private boolean active;
   private Instant validFrom;
   private Instant validTill;
-  private List<BuyXGetYRuleResponse> buyXGetYRules;
+  private List<BuyXGetYRulesResponse> buyXGetYRules;
   private CartWiseRule cartWiseRule;
 
   public static CouponResponse from(Coupon coupon) {
@@ -45,10 +45,10 @@ public class CouponResponse {
     return response;
   }
 
-  private static List<BuyXGetYRuleResponse> mapBuyXGetYRules(List<BuyXGetYRule> rules) {
+  private static List<BuyXGetYRulesResponse> mapBuyXGetYRules(List<BuyXGetYRule> rules) {
     return rules.stream()
         .map(rule -> {
-          return new BuyXGetYRuleResponse(
+          return new BuyXGetYRulesResponse(
               rule.getBuyProducts(),
               rule.getGetProducts(),
               rule.getRepetitionLimit()

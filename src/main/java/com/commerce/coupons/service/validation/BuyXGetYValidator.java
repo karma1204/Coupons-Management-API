@@ -1,21 +1,23 @@
 package com.commerce.coupons.service.validation;
 
-import com.commerce.coupons.model.rules.BuyXGetYRule;
+import com.commerce.coupons.dto.request.BuyXGetYRulesRequest;
 
 import java.util.List;
 
 public class BuyXGetYValidator {
 
-  public static void validate(List<BuyXGetYRule> rules){
+  private BuyXGetYValidator(){}
+
+  public static void validate(List<BuyXGetYRulesRequest> rules){
     if(rules == null || rules.isEmpty()){
       throw new IllegalArgumentException("Buy X Get Y rules list cannot be null or empty.");
     }
-    for(BuyXGetYRule rule : rules){
+    for(BuyXGetYRulesRequest rule : rules){
       validateRule(rule);
     }
   }
 
-  private static void validateRule(BuyXGetYRule rule){
+  private static void validateRule(BuyXGetYRulesRequest rule){
     if(rule.getBuyProducts() == null || rule.getBuyProducts().isEmpty()){
       throw new IllegalArgumentException("Buy products list in Buy X Get Y rule cannot be null or empty.");
     }

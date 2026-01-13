@@ -13,7 +13,7 @@ import java.util.Set;
 @Getter
 @Setter
 @NoArgsConstructor
-public class BuyXGetYRuleRequest {
+public class BuyXGetYRulesRequest {
 
   @NotEmpty(message = "Purchase products list cannot be empty")
   private Set<@Valid ProductQuantityDTO> buyProducts;

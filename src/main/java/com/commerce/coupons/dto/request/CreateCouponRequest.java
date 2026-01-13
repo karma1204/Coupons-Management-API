@@ -55,7 +55,7 @@ public class CreateCouponRequest {
   private Instant validTill;
 
   @Valid
-  private List<BuyXGetYRuleRequest> buyXGetYRules;
+  private List<BuyXGetYRulesRequest> buyXGetYRules;
 
   @Valid
   private CartWiseRuleRequest cartWiseRule;

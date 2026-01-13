@@ -1,23 +1,28 @@
 package com.commerce.coupons.service.impl;
 
 import com.commerce.coupons.dto.common.ProductQuantityDTO;
-import com.commerce.coupons.dto.request.BuyXGetYRuleRequest;
+import com.commerce.coupons.dto.request.BuyXGetYRulesRequest;
 import com.commerce.coupons.dto.request.CreateCouponRequest;
 import com.commerce.coupons.enums.CouponType;
 import com.commerce.coupons.model.Coupon;
 import com.commerce.coupons.model.entity.ProductQuantity;
 import com.commerce.coupons.model.rules.BuyXGetYRule;
 import com.commerce.coupons.model.rules.CartWiseRule;
+import com.commerce.coupons.service.validation.CouponCreateValidator;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.jpa.domain.Specification;
 
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+@Slf4j
 public class CouponFactory {
 
   private CouponFactory() {}
   static Coupon createCouponEntity(CreateCouponRequest request) {
+    CouponCreateValidator.validate(request);
+    log.info("Coupon validated successfully for code={}", request.getCode());
     Coupon coupon = new Coupon(
         request.getType(),
         request.getName(),
@@ -28,11 +33,16 @@ public class CouponFactory {
         request.getValidTill()
     );
 
+    log.info("Mapping coupon rules for type={}", request.getType());
     mapCouponRules(request, coupon);
+    log.info("Coupon rules mapped successfully for type={}", request.getType());
+
     return coupon;
   }
 
   static void updateCouponEntity(Coupon coupon, CreateCouponRequest request) {
+    CouponCreateValidator.validate(request);
+    log.info("Coupon validated successfully for code={}", request.getCode());
     coupon.setName(request.getName());
     coupon.setCode(request.getCode().toUpperCase());
     coupon.setDetails(request.getDetails());
@@ -40,7 +50,9 @@ public class CouponFactory {
     coupon.setValidFrom(request.getValidFrom());
     coupon.setValidTill(request.getValidTill());
 
+    log.info("Mapping coupon rules for type={}", request.getType());
     mapCouponRules(request, coupon);
+    log.info("Coupon rules mapped successfully for type={}", request.getType());
   }
 
   static void mapCouponRules(CreateCouponRequest request, Coupon coupon){
@@ -68,7 +80,7 @@ public class CouponFactory {
     }
   }
 
-  static List<BuyXGetYRule> mapBuyXGetYRules(List<BuyXGetYRuleRequest> requests) {
+  static List<BuyXGetYRule> mapBuyXGetYRules(List<BuyXGetYRulesRequest> requests) {
     if (requests == null || requests.isEmpty()) {
       return List.of();
     }
@@ -78,7 +90,7 @@ public class CouponFactory {
         .toList();
   }
 
-  static BuyXGetYRule mapBuyXGetYRule(BuyXGetYRuleRequest req) {
+  static BuyXGetYRule mapBuyXGetYRule(BuyXGetYRulesRequest req) {
     return new BuyXGetYRule(
         mapProducts(req.getBuyProducts()),
         mapProducts(req.getGetProducts()),

@@ -8,7 +8,7 @@ import java.util.Set;
 
 @AllArgsConstructor
 @Getter
-public class BuyXGetYRuleResponse {
+public class BuyXGetYRulesResponse {
 
   private Set<ProductQuantity> buyProducts;
   private Set<ProductQuantity> getProducts;
