@@ -5,6 +5,8 @@ import com.commerce.coupons.enums.CouponType;
 import com.commerce.coupons.model.rules.BuyXGetYRule;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 @Component
 public class CouponCreateValidator {
 
@@ -14,10 +16,10 @@ public class CouponCreateValidator {
 
   private void validateByType(CreateCouponRequest req) {
     forbidOtherRules(req);
-    Object rule = req.getType().extractRule(req);
+    Object rules = req.getType().extractRule(req);
 
     switch (req.getType()) {
-    case BUY_X_GET_Y -> BuyXGetYValidator.validate((BuyXGetYRule) rule);
+    case BUY_X_GET_Y -> BuyXGetYValidator.validate((List<BuyXGetYRule>) rules);
     default -> throw new IllegalArgumentException("Unsupported coupon type");
     }
   }

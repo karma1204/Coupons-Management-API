@@ -1,34 +1,52 @@
 package com.commerce.coupons.model.rules;
 
+import com.commerce.coupons.model.Coupon;
 import com.commerce.coupons.model.entity.ProductQuantity;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
+import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
+import java.util.UUID;
 
-@Embeddable
+@Entity
 @Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Table(name = "bxgy_rules")
 public class BuyXGetYRule {
+
+  @Id
+  @GeneratedValue(strategy = GenerationType.UUID)
+  private UUID id;
+
+  @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = "coupon_id", nullable = false)
+  private Coupon coupon;
 
   @ElementCollection
   @CollectionTable(
       name = "bxgy_buy_products",
-      joinColumns = @JoinColumn(name = "coupon_id")
+      joinColumns = @JoinColumn(name = "rule_set_id")
   )
-  private Set<ProductQuantity> buyProducts;
+  private Set<ProductQuantity> buyProducts = new HashSet<>();
 
   @ElementCollection
   @CollectionTable(
       name = "bxgy_get_products",
-      joinColumns = @JoinColumn(name = "coupon_id")
+      joinColumns = @JoinColumn(name = "rule_set_id")
   )
-  private Set<ProductQuantity> getProducts;
+  private Set<ProductQuantity> getProducts = new HashSet<>();
 
-  @Column(nullable = false)
   private int repetitionLimit;
+
+  public BuyXGetYRule(Set<ProductQuantity> buyProducts, Set<ProductQuantity> getProducts, int repetitionLimit) {
+    this.buyProducts = buyProducts;
+    this.getProducts = getProducts;
+    this.repetitionLimit = repetitionLimit;
+  }
 }
+
 

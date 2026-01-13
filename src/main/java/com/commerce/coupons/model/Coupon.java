@@ -6,6 +6,8 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.Instant;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -48,8 +50,12 @@ public class Coupon extends BaseEntity{
   @Column
   private Instant validTill; // null means no expiration or a long time in the future
 
-  @Embedded
-  private BuyXGetYRule buyXGetYRule;
+  @OneToMany(
+      mappedBy = "coupon",
+      cascade = CascadeType.ALL,
+      orphanRemoval = true
+  )
+  private List<BuyXGetYRule> buyXGetYRules = new ArrayList<>();
 
   @Override
   protected void validate() {
@@ -70,10 +76,15 @@ public class Coupon extends BaseEntity{
     }
   }
 
-  @Builder
-  public Coupon(CouponType type, String name, String code, String details,
-                boolean active, Instant validFrom, Instant validTill,
-                BuyXGetYRule buyXGetYRule) {
+  public Coupon(
+      CouponType type,
+      String name,
+      String code,
+      String details,
+      boolean active,
+      Instant validFrom,
+      Instant validTill
+  ) {
     this.type = type;
     this.name = name;
     this.code = code;
@@ -81,6 +92,13 @@ public class Coupon extends BaseEntity{
     this.active = active;
     this.validFrom = validFrom;
     this.validTill = validTill;
-    this.buyXGetYRule = buyXGetYRule;
+  }
+
+  public void addBuyXGetYRules(List<BuyXGetYRule> rules) {
+    this.buyXGetYRules.clear();
+    for (BuyXGetYRule rule : rules) {
+      rule.setCoupon(this);
+      this.buyXGetYRules.add(rule);
+    }
   }
 }

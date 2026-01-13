@@ -6,6 +6,7 @@ import com.commerce.coupons.model.rules.BuyXGetYRule;
 import lombok.Getter;
 
 import java.time.Instant;
+import java.util.List;
 import java.util.UUID;
 
 @Getter
@@ -19,7 +20,7 @@ public class CouponResponse {
   private boolean active;
   private Instant validFrom;
   private Instant validTill;
-  private BuyXGetYRuleResponse buyXGetYRule;
+  private List<BuyXGetYRuleResponse> buyXGetYRules;
 
   public static CouponResponse from(Coupon coupon) {
     CouponResponse response = new CouponResponse();
@@ -33,17 +34,21 @@ public class CouponResponse {
     response.validTill = coupon.getValidTill();
 
     switch (coupon.getType()) {
-    case BUY_X_GET_Y -> response.buyXGetYRule = mapBuyXGetYRule(coupon.getBuyXGetYRule());
+    case BUY_X_GET_Y -> response.buyXGetYRules = mapBuyXGetYRules(coupon.getBuyXGetYRules());
     }
 
     return response;
   }
 
-  private static BuyXGetYRuleResponse mapBuyXGetYRule(BuyXGetYRule rule) {
-    return new BuyXGetYRuleResponse(
-        rule.getBuyProducts(),
-        rule.getGetProducts(),
-        rule.getRepetitionLimit()
-    );
+  private static List<BuyXGetYRuleResponse> mapBuyXGetYRules(List<BuyXGetYRule> rules) {
+    return rules.stream()
+        .map(rule -> {
+          return new BuyXGetYRuleResponse(
+              rule.getBuyProducts(),
+              rule.getGetProducts(),
+              rule.getRepetitionLimit()
+          );
+        })
+        .toList();
   }
 }

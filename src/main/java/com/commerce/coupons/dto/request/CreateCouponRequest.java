@@ -11,6 +11,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.Instant;
+import java.util.List;
 
 @Getter
 @Setter
@@ -54,7 +55,7 @@ public class CreateCouponRequest {
   private Instant validTill;
 
   @Valid
-  private BuyXGetYRuleRequest buyXGetYRule;
+  private List<BuyXGetYRuleRequest> buyXGetYRules;
 
   @AssertTrue(message = "validFrom must be in the future")
   public boolean isValidFromInFuture() {

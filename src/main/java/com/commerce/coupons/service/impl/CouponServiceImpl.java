@@ -3,6 +3,7 @@ package com.commerce.coupons.service.impl;
 import com.commerce.coupons.dto.common.ProductQuantityDTO;
 import com.commerce.coupons.dto.request.CreateCouponRequest;
 import com.commerce.coupons.dto.request.BuyXGetYRuleRequest;
+import com.commerce.coupons.dto.response.BuyXGetYRuleResponse;
 import com.commerce.coupons.dto.response.CouponResponse;
 import com.commerce.coupons.dto.response.CouponsResponse;
 import com.commerce.coupons.enums.CouponType;
@@ -39,21 +40,23 @@ public class CouponServiceImpl implements CouponService {
   @Override
   public CouponResponse createCoupon(CreateCouponRequest request) {
     log.info("Creating coupon with code={}", request.getCode());
-    Coupon.CouponBuilder builder = Coupon.builder()
-        .type(request.getType())
-        .name(request.getName())
-        .code(request.getCode().toUpperCase())
-        .details(request.getDetails())
-        .active(request.getActive())
-        .validFrom(request.getValidFrom())
-        .validTill(request.getValidTill());
+    Coupon coupon = new Coupon(
+        request.getType(),
+        request.getName(),
+        request.getCode().toUpperCase(),
+        request.getDetails(),
+        request.getActive(),
+        request.getValidFrom(),
+        request.getValidTill()
+    );
 
-    // Attach rule based on type
     switch (request.getType()) {
-      case BUY_X_GET_Y -> builder.buyXGetYRule(mapBuyXGetYRule(request.getBuyXGetYRule()));
+    case BUY_X_GET_Y ->
+        coupon.addBuyXGetYRules(
+            mapBuyXGetYRules(request.getBuyXGetYRules())
+        );
     }
 
-    Coupon coupon = builder.build();
     couponRepository.save(coupon);
     log.info("Created coupon - {} : {}", coupon.getId(), coupon.getName());
     return CouponResponse.from(coupon);
@@ -111,7 +114,7 @@ public class CouponServiceImpl implements CouponService {
 
     // Update rule based on type
     switch (request.getType()) {
-      case BUY_X_GET_Y -> coupon.setBuyXGetYRule(mapBuyXGetYRule(request.getBuyXGetYRule()));
+      case BUY_X_GET_Y -> coupon.addBuyXGetYRules(mapBuyXGetYRules(request.getBuyXGetYRules()));
     }
 
     couponRepository.save(coupon);
@@ -129,6 +132,16 @@ public class CouponServiceImpl implements CouponService {
     log.info("Deleted coupon with id {}", id);
   }
 
+  private List<BuyXGetYRule> mapBuyXGetYRules(List<BuyXGetYRuleRequest> requests) {
+    if (requests == null || requests.isEmpty()) {
+      return List.of();
+    }
+
+    return requests.stream()
+        .map(this::mapBuyXGetYRule)
+        .toList();
+  }
+
   private BuyXGetYRule mapBuyXGetYRule(BuyXGetYRuleRequest req) {
     return new BuyXGetYRule(
         mapProducts(req.getBuyProducts()),
@@ -138,9 +151,9 @@ public class CouponServiceImpl implements CouponService {
   }
 
   private Set<ProductQuantity> mapProducts(
-      Set<ProductQuantityDTO> dtos
+      Set<ProductQuantityDTO> products
   ) {
-    return dtos.stream()
+    return products.stream()
         .map(dto -> new ProductQuantity(dto.getProductId(), dto.getQuantity()))
         .collect(Collectors.toSet());
   }

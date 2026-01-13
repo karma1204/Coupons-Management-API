@@ -5,7 +5,7 @@ import com.commerce.coupons.dto.request.CreateCouponRequest;
 import java.util.function.Function;
 
 public enum CouponType {
-    BUY_X_GET_Y(CreateCouponRequest::getBuyXGetYRule);
+    BUY_X_GET_Y(CreateCouponRequest::getBuyXGetYRules);
 
     private final Function<CreateCouponRequest, Object> ruleExtractor;
 
