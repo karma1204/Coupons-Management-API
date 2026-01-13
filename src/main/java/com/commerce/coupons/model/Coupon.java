@@ -2,6 +2,7 @@ package com.commerce.coupons.model;
 
 import com.commerce.coupons.enums.CouponType;
 import com.commerce.coupons.model.rules.BuyXGetYRule;
+import com.commerce.coupons.model.rules.CartWiseRule;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -56,6 +57,9 @@ public class Coupon extends BaseEntity{
       orphanRemoval = true
   )
   private List<BuyXGetYRule> buyXGetYRules = new ArrayList<>();
+
+  @OneToOne(mappedBy = "coupon", cascade = CascadeType.ALL, orphanRemoval = true)
+  private CartWiseRule cartWiseRule;
 
   @Override
   protected void validate() {

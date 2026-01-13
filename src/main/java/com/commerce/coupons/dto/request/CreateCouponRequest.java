@@ -57,6 +57,9 @@ public class CreateCouponRequest {
   @Valid
   private List<BuyXGetYRuleRequest> buyXGetYRules;
 
+  @Valid
+  private CartWiseRuleRequest cartWiseRule;
+
   @AssertTrue(message = "validFrom must be in the future")
   public boolean isValidFromInFuture() {
     return validFrom != null && validFrom.isAfter(Instant.now().minusSeconds(5));

@@ -2,11 +2,11 @@ package com.commerce.coupons.model.rules;
 
 import com.commerce.coupons.model.Coupon;
 import com.commerce.coupons.model.entity.ProductQuantity;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.HashSet;
-import java.util.Objects;
 import java.util.Set;
 import java.util.UUID;
 
@@ -24,6 +24,7 @@ public class BuyXGetYRule {
 
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "coupon_id", nullable = false)
+  @JsonIgnore
   private Coupon coupon;
 
   @ElementCollection
