@@ -1,7 +1,7 @@
 package com.commerce.coupons.model.rules;
 
 import com.commerce.coupons.model.Coupon;
-import com.commerce.coupons.model.entity.ProductQuantity;
+import com.commerce.coupons.model.common.ProductQuantity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;

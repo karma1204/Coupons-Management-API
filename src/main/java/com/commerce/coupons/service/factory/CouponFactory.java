@@ -1,11 +1,11 @@
-package com.commerce.coupons.service.impl;
+package com.commerce.coupons.service.factory;
 
 import com.commerce.coupons.dto.common.ProductQuantityDTO;
 import com.commerce.coupons.dto.request.BuyXGetYRulesRequest;
 import com.commerce.coupons.dto.request.CreateCouponRequest;
 import com.commerce.coupons.enums.CouponType;
 import com.commerce.coupons.model.Coupon;
-import com.commerce.coupons.model.entity.ProductQuantity;
+import com.commerce.coupons.model.common.ProductQuantity;
 import com.commerce.coupons.model.rules.BuyXGetYRule;
 import com.commerce.coupons.model.rules.CartWiseRule;
 import com.commerce.coupons.service.validation.CouponCreateValidator;
@@ -20,7 +20,7 @@ import java.util.stream.Collectors;
 public class CouponFactory {
 
   private CouponFactory() {}
-  static Coupon createCouponEntity(CreateCouponRequest request) {
+  public static Coupon createCouponEntity(CreateCouponRequest request) {
     CouponCreateValidator.validate(request);
     log.info("Coupon validated successfully for code={}", request.getCode());
     Coupon coupon = new Coupon(
@@ -40,7 +40,7 @@ public class CouponFactory {
     return coupon;
   }
 
-  static void updateCouponEntity(Coupon coupon, CreateCouponRequest request) {
+  public static void updateCouponEntity(Coupon coupon, CreateCouponRequest request) {
     CouponCreateValidator.validate(request);
     log.info("Coupon validated successfully for code={}", request.getCode());
     coupon.setName(request.getName());
@@ -106,7 +106,7 @@ public class CouponFactory {
         .collect(Collectors.toSet());
   }
 
-  static Specification<Coupon> couponsCriteria(Boolean active, String code, CouponType type) {
+  public static Specification<Coupon> couponsCriteria(Boolean active, String code, CouponType type) {
     return (root, query, cb) -> {
       var predicates = cb.conjunction();
 

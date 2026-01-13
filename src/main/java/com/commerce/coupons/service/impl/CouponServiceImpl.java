@@ -7,6 +7,7 @@ import com.commerce.coupons.enums.CouponType;
 import com.commerce.coupons.model.Coupon;
 import com.commerce.coupons.repository.CouponRepository;
 import com.commerce.coupons.service.CouponService;
+import com.commerce.coupons.service.factory.CouponFactory;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;

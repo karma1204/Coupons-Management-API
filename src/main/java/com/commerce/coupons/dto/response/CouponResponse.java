@@ -4,7 +4,6 @@ import com.commerce.coupons.enums.CouponType;
 import com.commerce.coupons.model.Coupon;
 import com.commerce.coupons.model.rules.BuyXGetYRule;
 import com.commerce.coupons.model.rules.CartWiseRule;
-import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Getter;
 
 import java.time.Instant;
@@ -12,7 +11,6 @@ import java.util.List;
 import java.util.UUID;
 
 @Getter
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class CouponResponse {
 
   private UUID id;

@@ -1,4 +1,4 @@
-package com.commerce.coupons.model.entity;
+package com.commerce.coupons.model.common;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
