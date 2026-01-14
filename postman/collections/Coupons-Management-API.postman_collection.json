@@ -1,0 +1,728 @@
+{
+  "info": {
+    "_postman_id": "98eafe64-bcf0-43e8-87e0-6008cbe8a135",
+    "name": "Coupons-Management-API",
+    "description": "# 🚀 Get started here\n\nThis template guides you through CRUD operations (GET, POST, PUT, DELETE), variables, and tests.\n\n## 🔖 **How to use this template**\n\n#### **Step 1: Send requests**\n\nRESTful APIs allow you to perform CRUD operations using the POST, GET, PUT, and DELETE HTTP methods.\n\nThis collection contains each of these [request](https://learning.postman.com/docs/sending-requests/requests/) types. Open each request and click \"Send\" to see what happens.\n\n#### **Step 2: View responses**\n\nObserve the response tab for status code (200 OK), response time, and size.\n\n#### **Step 3: Send new Body data**\n\nUpdate or add new data in \"Body\" in the POST request. Typically, Body data is also used in PUT request.\n\n```\n{\n    \"name\": \"Add your name in the body\"\n}\n\n ```\n\n#### **Step 4: Update the variable**\n\nVariables enable you to store and reuse values in Postman. We have created a [variable](https://learning.postman.com/docs/sending-requests/variables/) called `base_url` with the sample request [https://postman-api-learner.glitch.me](https://postman-api-learner.glitch.me). Replace it with your API endpoint to customize this collection.\n\n#### **Step 5: Add tests in the \"Scripts\" tab**\n\nAdding tests to your requests can help you confirm that your API is working as expected. You can write test scripts in JavaScript and view the output in the \"Test Results\" tab.\n\n<img src=\"https://content.pstmn.io/fa30ea0a-373d-4545-a668-e7b283cca343/aW1hZ2UucG5n\" width=\"2162\" height=\"1530\">\n\n## 💪 Pro tips\n\n- Use folders to group related requests and organize the collection.\n    \n- Add more [scripts](https://learning.postman.com/docs/writing-scripts/intro-to-scripts/) to verify if the API works as expected and execute workflows.\n    \n\n## 💡Related templates\n\n[API testing basics](https://go.postman.co/redirect/workspace?type=personal&collectionTemplateId=e9a37a28-055b-49cd-8c7e-97494a21eb54&sourceTemplateId=ddb19591-3097-41cf-82af-c84273e56719)  \n[API documentation](https://go.postman.co/redirect/workspace?type=personal&collectionTemplateId=e9c28f47-1253-44af-a2f3-20dce4da1f18&sourceTemplateId=ddb19591-3097-41cf-82af-c84273e56719)  \n[Authorization methods](https://go.postman.co/redirect/workspace?type=personal&collectionTemplateId=31a9a6ed-4cdf-4ced-984c-d12c9aec1c27&sourceTemplateId=ddb19591-3097-41cf-82af-c84273e56719)",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Get",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Status code is 200\", function () {",
+              "    pm.response.to.have.status(200);",
+              "});"
+            ]
+          }
+        }
+      ],
+      "id": "33f6448e-2a58-4201-b2f3-eb9833c14f71",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/info?id=1",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "info"
+          ],
+          "query": [
+            {
+              "key": "id",
+              "value": "1"
+            }
+          ]
+        },
+        "description": "This is a GET request and it is used to \"get\" data from an endpoint. There is no request body for a GET request, but you can use query parameters to help specify the resource you want data on (e.g., in this request, we have `id=1`).\n\nA successful GET response will have a `200 OK` status, and should include some kind of response body - for example, HTML web content or JSON data."
+      },
+      "response": [
+        {
+          "id": "3e3192e7-0b93-4b1d-978c-4e1c9dc42a55",
+          "name": "Get All",
+          "originalRequest": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/coupons",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "coupons"
+              ],
+              "query": [
+                {
+                  "key": "active",
+                  "value": "true",
+                  "disabled": true
+                },
+                {
+                  "key": "type",
+                  "value": "BUY_X_GET_Y",
+                  "disabled": true
+                }
+              ]
+            }
+          },
+          "status": "OK",
+          "code": 200,
+          "_postman_previewlanguage": null,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "key": "Transfer-Encoding",
+              "value": "chunked"
+            },
+            {
+              "key": "Date",
+              "value": "Wed, 14 Jan 2026 11:00:43 GMT"
+            },
+            {
+              "key": "Keep-Alive",
+              "value": "timeout=60"
+            },
+            {
+              "key": "Connection",
+              "value": "keep-alive"
+            }
+          ],
+          "cookie": [],
+          "body": "{\n    \"coupons\": [\n        {\n            \"active\": true,\n            \"cartWiseRule\": {\n                \"id\": \"fdeab1b8-ec42-4d13-87ed-7573db3217b5\",\n                \"maxApplications\": 1,\n                \"maxDiscountAmount\": 500,\n                \"percentageDiscount\": 20,\n                \"thresholdAmount\": 1000\n            },\n            \"code\": \"20%OFF\",\n            \"details\": \"Buy minimum of Rs1000 Get 20% off upto Rs500. Applied before shipping and GST.\",\n            \"id\": \"1f3ef4ff-3e0a-4aab-b75b-97fed7821e02\",\n            \"name\": \"Buy minimum of Rs1000 Get 20% off upto Rs500.\",\n            \"type\": \"CART_WISE_PERCENTAGE\",\n            \"validFrom\": \"2026-01-13T12:00:00Z\",\n            \"validTill\": \"2026-01-31T18:29:59Z\"\n        },\n        {\n            \"active\": true,\n            \"cartWiseRule\": {\n                \"id\": \"ff7ffa11-b11c-4877-a0e6-edb6c8d46e6a\",\n                \"maxApplications\": 1,\n                \"maxDiscountAmount\": 300,\n                \"percentageDiscount\": 30,\n                \"thresholdAmount\": 900\n            },\n            \"code\": \"30%OFF\",\n            \"details\": \"Buy minimum of Rs900 Get 30% off upto Rs300. Applied before shipping and GST.\",\n            \"id\": \"48b591bd-5c17-43b3-85f3-39b17bcbd1ce\",\n            \"name\": \"Buy minimum of Rs900 Get 30% off upto Rs300.\",\n            \"type\": \"CART_WISE_PERCENTAGE\",\n            \"validFrom\": \"2026-01-13T12:00:00Z\",\n            \"validTill\": \"2026-01-31T18:29:59Z\"\n        },\n        {\n            \"active\": true,\n            \"cartWiseRule\": {\n                \"id\": \"6c57dfd1-ece6-4147-9440-6de111b52032\",\n                \"maxApplications\": 3,\n                \"maxDiscountAmount\": 200,\n                \"percentageDiscount\": 10,\n                \"thresholdAmount\": 1000\n            },\n            \"code\": \"10%OFF\",\n            \"details\": \"Buy minimum of Rs1000 Get 10% off upto Rs200. Applied before shipping and GST.\",\n            \"id\": \"bf429bd1-23b3-4943-b2b8-dc0dfce9abe1\",\n            \"name\": \"Buy minimum of Rs1000 Get 10% off upto Rs200.\",\n            \"type\": \"CART_WISE_PERCENTAGE\",\n            \"validFrom\": \"2026-01-14T12:00:00Z\",\n            \"validTill\": \"2026-01-31T18:29:59Z\"\n        },\n        {\n            \"active\": true,\n            \"cartWiseRule\": {\n                \"flatDiscountAmount\": 100,\n                \"id\": \"be7278ba-3d11-4ac3-b198-a630cdb4af8b\",\n                \"maxApplications\": 5,\n                \"thresholdAmount\": 300\n            },\n            \"code\": \"F100\",\n            \"details\": \"Buy for 300 Get flat 100 off. Applied before shipping and GST.\",\n            \"id\": \"9ab3ab5e-9eb1-438c-8c1a-9d73c7b8e524\",\n            \"name\": \"Buy for 300 Get flat 100 off.\",\n            \"type\": \"CART_WISE_FLAT_AMOUNT\",\n            \"validFrom\": \"2026-01-13T12:00:00Z\",\n            \"validTill\": \"2026-01-31T18:29:59Z\"\n        },\n        {\n            \"active\": true,\n            \"buyXGetYRules\": [\n                {\n                    \"buyProducts\": [\n                        {\n                            \"productId\": \"019bb358-039e-74f2-94fb-1290af0f6e03\",\n                            \"quantity\": 1\n                        },\n                        {\n                            \"productId\": \"019bb238-e41e-70e3-8410-b286a9e01099\",\n                            \"quantity\": 2\n                        }\n                    ],\n                    \"getProducts\": [\n                        {\n                            \"productId\": \"019bb357-7302-70e7-85dc-b552c9cb9e46\",\n                            \"quantity\": 2\n                        }\n                    ],\n                    \"repetitionLimit\": 2\n                },\n                {\n                    \"buyProducts\": [\n                        {\n                            \"productId\": \"019bb358-039e-74f2-94fb-1290af0f6e03\",\n                            \"quantity\": 2\n                        },\n                        {\n                            \"productId\": \"019bb236-7302-70e7-85dc-b552c9cb8e25\",\n                            \"quantity\": 1\n                        }\n                    ],\n                    \"getProducts\": [\n                        {\n                            \"productId\": \"019bb145-e41e-70e3-8410-b286a9e02576\",\n                            \"quantity\": 2\n                        }\n                    ],\n                    \"repetitionLimit\": 1\n                }\n            ],\n            \"code\": \"B3G2 -V2\",\n            \"details\": \"Buy 3 Get 3 free on selected products. You will be able to use this coupon 2 times.\",\n            \"id\": \"f8edcf95-bfd3-429b-902a-5e0c305cf038\",\n            \"name\": \"Buy 3 Get 2 -v2\",\n            \"type\": \"BUY_X_GET_Y\",\n            \"validFrom\": \"2026-01-13T12:00:00Z\",\n            \"validTill\": \"2026-01-31T18:29:59Z\"\n        }\n    ],\n    \"totalCount\": 5,\n    \"hasMoreResults\": false\n}"
+        }
+      ]
+    },
+    {
+      "name": "Post",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "id": "b41eef8d-632e-4587-a828-8a4a9204598f",
+            "exec": [
+              "pm.test(\"Successful POST request\", function () {",
+              "    pm.expect(pm.response.code).to.be.oneOf([200, 201]);",
+              "});",
+              ""
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "id": "22b9a63e-35eb-404a-83f9-713e9a0b1ff7",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n            \"active\": true,\n            \"cartWiseRule\": {\n                \"id\": \"ff7ffa11-b11c-4877-a0e6-edb6c8d46e6a\",\n                \"maxApplications\": 1,\n                \"maxDiscountAmount\": 300.0,\n                \"percentageDiscount\": 30.0,\n                \"thresholdAmount\": 900.0\n            },\n            \"code\": \"30%OFF\",\n            \"details\": \"Buy minimum of Rs900 Get 30% off upto Rs300. Applied before shipping and GST.\",\n            \"name\": \"Buy minimum of Rs900 Get 30% off upto Rs300.\",\n            \"type\": \"CART_WISE_PERCENTAGE\",\n            \"validFrom\": \"2026-01-13T12:00:00Z\",\n            \"validTill\": \"2026-01-31T18:29:59Z\"\n        }",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{base_url}}/coupons",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "coupons"
+          ]
+        },
+        "description": "This is a POST request, submitting data to an API via the request body. This request submits JSON data, and the data is reflected in the response.\n\nA successful POST request typically returns a `200 OK` or `201 Created` response code."
+      },
+      "response": [
+        {
+          "id": "3b9cd175-c53a-4d01-8899-05f641a4ec21",
+          "name": "CART_WISE_PERCENTAGE coupon",
+          "originalRequest": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"active\": true,\n    \"cartWiseRule\": {\n        \"id\": \"fdeab1b8-ec42-4d13-87ed-7573db3217b5\",\n        \"maxApplications\": 1,\n        \"maxDiscountAmount\": 500.0,\n        \"percentageDiscount\": 20.0,\n        \"thresholdAmount\": 1000.0\n    },\n    \"code\": \"20%OFF\",\n    \"details\": \"Buy minimum of Rs1000 Get 20% off upto Rs500. Applied before shipping and GST.\",\n    \"name\": \"Buy minimum of Rs1000 Get 20% off upto Rs500.\",\n    \"type\": \"CART_WISE_PERCENTAGE\",\n    \"validFrom\": \"2026-01-13T12:00:00Z\",\n    \"validTill\": \"2026-01-31T18:29:59Z\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/coupons",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "coupons"
+              ]
+            }
+          },
+          "status": "Created",
+          "code": 201,
+          "_postman_previewlanguage": null,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "key": "Transfer-Encoding",
+              "value": "chunked"
+            },
+            {
+              "key": "Date",
+              "value": "Wed, 14 Jan 2026 11:08:25 GMT"
+            },
+            {
+              "key": "Keep-Alive",
+              "value": "timeout=60"
+            },
+            {
+              "key": "Connection",
+              "value": "keep-alive"
+            }
+          ],
+          "cookie": [],
+          "body": "{\n    \"active\": true,\n    \"cartWiseRule\": {\n        \"id\": \"6b8a96ba-b393-48be-87bc-2a67929dbaa6\",\n        \"maxApplications\": 1,\n        \"maxDiscountAmount\": 500,\n        \"percentageDiscount\": 20,\n        \"thresholdAmount\": 1000\n    },\n    \"code\": \"20%OFF\",\n    \"details\": \"Buy minimum of Rs1000 Get 20% off upto Rs500. Applied before shipping and GST.\",\n    \"id\": \"22088d6c-b770-49be-a02e-749d0359ec15\",\n    \"name\": \"Buy minimum of Rs1000 Get 20% off upto Rs500.\",\n    \"type\": \"CART_WISE_PERCENTAGE\",\n    \"validFrom\": \"2026-01-13T12:00:00Z\",\n    \"validTill\": \"2026-01-31T18:29:59Z\"\n}"
+        },
+        {
+          "id": "1851e92d-00e0-47ba-9fd4-8cccc2904582",
+          "name": "CART_WISE_FLAT_AMOUNT coupon",
+          "originalRequest": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n            \"active\": true,\n            \"cartWiseRule\": {\n                \"flatDiscountAmount\": 100.0,\n                \"id\": \"be7278ba-3d11-4ac3-b198-a630cdb4af8b\",\n                \"maxApplications\": 5,\n                \"thresholdAmount\": 300.0\n            },\n            \"code\": \"F100\",\n            \"details\": \"Buy for 300 Get flat 100 off. Applied before shipping and GST.\",\n            \"name\": \"Buy for 300 Get flat 100 off.\",\n            \"type\": \"CART_WISE_FLAT_AMOUNT\",\n            \"validFrom\": \"2026-01-13T12:00:00Z\",\n            \"validTill\": \"2026-01-31T18:29:59Z\"\n        }",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/coupons",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "coupons"
+              ]
+            }
+          },
+          "status": "Created",
+          "code": 201,
+          "_postman_previewlanguage": null,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "key": "Transfer-Encoding",
+              "value": "chunked"
+            },
+            {
+              "key": "Date",
+              "value": "Wed, 14 Jan 2026 11:09:41 GMT"
+            },
+            {
+              "key": "Keep-Alive",
+              "value": "timeout=60"
+            },
+            {
+              "key": "Connection",
+              "value": "keep-alive"
+            }
+          ],
+          "cookie": [],
+          "body": "{\n    \"active\": true,\n    \"cartWiseRule\": {\n        \"flatDiscountAmount\": 100,\n        \"id\": \"53287f05-da14-4030-bb4d-bcd639072fac\",\n        \"maxApplications\": 5,\n        \"thresholdAmount\": 300\n    },\n    \"code\": \"F100\",\n    \"details\": \"Buy for 300 Get flat 100 off. Applied before shipping and GST.\",\n    \"id\": \"8b66ebc3-13d7-47db-9372-dbc0c02057a6\",\n    \"name\": \"Buy for 300 Get flat 100 off.\",\n    \"type\": \"CART_WISE_FLAT_AMOUNT\",\n    \"validFrom\": \"2026-01-13T12:00:00Z\",\n    \"validTill\": \"2026-01-31T18:29:59Z\"\n}"
+        },
+        {
+          "id": "77faab3e-0a95-4091-8913-fe202dbce86e",
+          "name": "BUY_X_GET_Y coupon",
+          "originalRequest": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n            \"active\": true,\n            \"buyXGetYRules\": [\n                {\n                    \"buyProducts\": [\n                        {\n                            \"productId\": \"019bb358-039e-74f2-94fb-1290af0f6e03\",\n                            \"quantity\": 1\n                        },\n                        {\n                            \"productId\": \"019bb238-e41e-70e3-8410-b286a9e01099\",\n                            \"quantity\": 2\n                        }\n                    ],\n                    \"getProducts\": [\n                        {\n                            \"productId\": \"019bb357-7302-70e7-85dc-b552c9cb9e46\",\n                            \"quantity\": 2\n                        }\n                    ],\n                    \"repetitionLimit\": 2\n                },\n                {\n                    \"buyProducts\": [\n                        {\n                            \"productId\": \"019bb358-039e-74f2-94fb-1290af0f6e03\",\n                            \"quantity\": 2\n                        },\n                        {\n                            \"productId\": \"019bb236-7302-70e7-85dc-b552c9cb8e25\",\n                            \"quantity\": 1\n                        }\n                    ],\n                    \"getProducts\": [\n                        {\n                            \"productId\": \"019bb145-e41e-70e3-8410-b286a9e02576\",\n                            \"quantity\": 2\n                        }\n                    ],\n                    \"repetitionLimit\": 1\n                }\n            ],\n            \"code\": \"B3G2\",\n            \"details\": \"Buy 3 Get 3 free on selected products. You will be able to use this coupon 2 times.\",\n            \"name\": \"Buy 3 Get 2\",\n            \"type\": \"BUY_X_GET_Y\",\n            \"validFrom\": \"2026-01-13T12:00:00Z\",\n            \"validTill\": \"2026-01-31T18:29:59Z\"\n        }",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/coupons",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "coupons"
+              ]
+            }
+          },
+          "status": "Created",
+          "code": 201,
+          "_postman_previewlanguage": null,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "key": "Transfer-Encoding",
+              "value": "chunked"
+            },
+            {
+              "key": "Date",
+              "value": "Wed, 14 Jan 2026 11:10:47 GMT"
+            },
+            {
+              "key": "Keep-Alive",
+              "value": "timeout=60"
+            },
+            {
+              "key": "Connection",
+              "value": "keep-alive"
+            }
+          ],
+          "cookie": [],
+          "body": "{\n    \"active\": true,\n    \"buyXGetYRules\": [\n        {\n            \"buyProducts\": [\n                {\n                    \"productId\": \"019bb358-039e-74f2-94fb-1290af0f6e03\",\n                    \"quantity\": 1\n                },\n                {\n                    \"productId\": \"019bb238-e41e-70e3-8410-b286a9e01099\",\n                    \"quantity\": 2\n                }\n            ],\n            \"getProducts\": [\n                {\n                    \"productId\": \"019bb357-7302-70e7-85dc-b552c9cb9e46\",\n                    \"quantity\": 2\n                }\n            ],\n            \"repetitionLimit\": 2\n        },\n        {\n            \"buyProducts\": [\n                {\n                    \"productId\": \"019bb358-039e-74f2-94fb-1290af0f6e03\",\n                    \"quantity\": 2\n                },\n                {\n                    \"productId\": \"019bb236-7302-70e7-85dc-b552c9cb8e25\",\n                    \"quantity\": 1\n                }\n            ],\n            \"getProducts\": [\n                {\n                    \"productId\": \"019bb145-e41e-70e3-8410-b286a9e02576\",\n                    \"quantity\": 2\n                }\n            ],\n            \"repetitionLimit\": 1\n        }\n    ],\n    \"code\": \"B3G2\",\n    \"details\": \"Buy 3 Get 3 free on selected products. You will be able to use this coupon 2 times.\",\n    \"id\": \"eac2ca77-d80d-4c52-96cb-1313a24075b9\",\n    \"name\": \"Buy 3 Get 2\",\n    \"type\": \"BUY_X_GET_Y\",\n    \"validFrom\": \"2026-01-13T12:00:00Z\",\n    \"validTill\": \"2026-01-31T18:29:59Z\"\n}"
+        }
+      ]
+    },
+    {
+      "name": "Update",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "id": "b41eef8d-632e-4587-a828-8a4a9204598f",
+            "exec": [
+              "pm.test(\"Successful POST request\", function () {",
+              "    pm.expect(pm.response.code).to.be.oneOf([200, 201]);",
+              "});",
+              ""
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "id": "d41ccdd2-2f2c-4b7f-ac35-86ba11b2df56",
+      "request": {
+        "method": "PUT",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n            \"active\": true,\n            \"cartWiseRule\": {\n                \"id\": \"ff7ffa11-b11c-4877-a0e6-edb6c8d46e6a\",\n                \"maxApplications\": 1,\n                \"maxDiscountAmount\": 300.0,\n                \"percentageDiscount\": 30.0,\n                \"thresholdAmount\": 900.0\n            },\n            \"code\": \"30%OFF\",\n            \"details\": \"Buy minimum of Rs900 Get 30% off upto Rs300. Applied before shipping and GST.\",\n            \"name\": \"Buy minimum of Rs900 Get 30% off upto Rs300.\",\n            \"type\": \"CART_WISE_PERCENTAGE\",\n            \"validFrom\": \"2026-01-13T12:00:00Z\",\n            \"validTill\": \"2026-01-31T18:29:59Z\"\n        }",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{base_url}}/coupons",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "coupons"
+          ]
+        },
+        "description": "This is a POST request, submitting data to an API via the request body. This request submits JSON data, and the data is reflected in the response.\n\nA successful POST request typically returns a `200 OK` or `201 Created` response code."
+      },
+      "response": [
+        {
+          "id": "a985cdca-4225-40c7-97f4-632694f3c700",
+          "name": "CART_WISE_PERCENTAGE coupon",
+          "originalRequest": {
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"active\": true,\n    \"cartWiseRule\": {\n        \"id\": \"fdeab1b8-ec42-4d13-87ed-7573db3217b5\",\n        \"maxApplications\": 1,\n        \"maxDiscountAmount\": 500.0,\n        \"percentageDiscount\": 20.0,\n        \"thresholdAmount\": 1000.0\n    },\n    \"code\": \"20%OFF\",\n    \"details\": \"Buy minimum of Rs1000 Get 20% off upto Rs500. Applied before shipping and GST.\",\n    \"name\": \"Buy minimum of Rs1000 Get 20% off upto Rs500.\",\n    \"type\": \"CART_WISE_PERCENTAGE\",\n    \"validFrom\": \"2026-01-13T12:00:00Z\",\n    \"validTill\": \"2026-01-31T18:29:59Z\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/coupons/22088d6c-b770-49be-a02e-749d0359ec15",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "coupons",
+                "22088d6c-b770-49be-a02e-749d0359ec15"
+              ]
+            }
+          },
+          "status": "OK",
+          "code": 200,
+          "_postman_previewlanguage": null,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "key": "Transfer-Encoding",
+              "value": "chunked"
+            },
+            {
+              "key": "Date",
+              "value": "Wed, 14 Jan 2026 11:08:25 GMT"
+            },
+            {
+              "key": "Keep-Alive",
+              "value": "timeout=60"
+            },
+            {
+              "key": "Connection",
+              "value": "keep-alive"
+            }
+          ],
+          "cookie": [],
+          "body": "{\n    \"active\": true,\n    \"cartWiseRule\": {\n        \"id\": \"6b8a96ba-b393-48be-87bc-2a67929dbaa6\",\n        \"maxApplications\": 1,\n        \"maxDiscountAmount\": 500,\n        \"percentageDiscount\": 20,\n        \"thresholdAmount\": 1000\n    },\n    \"code\": \"20%OFF\",\n    \"details\": \"Buy minimum of Rs1000 Get 20% off upto Rs500. Applied before shipping and GST.\",\n    \"id\": \"22088d6c-b770-49be-a02e-749d0359ec15\",\n    \"name\": \"Buy minimum of Rs1000 Get 20% off upto Rs500.\",\n    \"type\": \"CART_WISE_PERCENTAGE\",\n    \"validFrom\": \"2026-01-13T12:00:00Z\",\n    \"validTill\": \"2026-01-31T18:29:59Z\"\n}"
+        },
+        {
+          "id": "60acb2d6-d73e-4686-84bb-cdafa146f117",
+          "name": "CART_WISE_FLAT_AMOUNT coupon",
+          "originalRequest": {
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n            \"active\": true,\n            \"cartWiseRule\": {\n                \"flatDiscountAmount\": 100.0,\n                \"id\": \"be7278ba-3d11-4ac3-b198-a630cdb4af8b\",\n                \"maxApplications\": 5,\n                \"thresholdAmount\": 300.0\n            },\n            \"code\": \"F100\",\n            \"details\": \"Buy for 300 Get flat 100 off. Applied before shipping and GST.\",\n            \"name\": \"Buy for 300 Get flat 100 off.\",\n            \"type\": \"CART_WISE_FLAT_AMOUNT\",\n            \"validFrom\": \"2026-01-13T12:00:00Z\",\n            \"validTill\": \"2026-01-31T18:29:59Z\"\n        }",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/coupons/8b66ebc3-13d7-47db-9372-dbc0c02057a6",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "coupons",
+                "8b66ebc3-13d7-47db-9372-dbc0c02057a6"
+              ]
+            }
+          },
+          "status": "OK",
+          "code": 200,
+          "_postman_previewlanguage": null,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "key": "Transfer-Encoding",
+              "value": "chunked"
+            },
+            {
+              "key": "Date",
+              "value": "Wed, 14 Jan 2026 11:09:41 GMT"
+            },
+            {
+              "key": "Keep-Alive",
+              "value": "timeout=60"
+            },
+            {
+              "key": "Connection",
+              "value": "keep-alive"
+            }
+          ],
+          "cookie": [],
+          "body": "{\n    \"active\": true,\n    \"cartWiseRule\": {\n        \"flatDiscountAmount\": 100,\n        \"id\": \"53287f05-da14-4030-bb4d-bcd639072fac\",\n        \"maxApplications\": 5,\n        \"thresholdAmount\": 300\n    },\n    \"code\": \"F100\",\n    \"details\": \"Buy for 300 Get flat 100 off. Applied before shipping and GST.\",\n    \"id\": \"8b66ebc3-13d7-47db-9372-dbc0c02057a6\",\n    \"name\": \"Buy for 300 Get flat 100 off.\",\n    \"type\": \"CART_WISE_FLAT_AMOUNT\",\n    \"validFrom\": \"2026-01-13T12:00:00Z\",\n    \"validTill\": \"2026-01-31T18:29:59Z\"\n}"
+        },
+        {
+          "id": "d71cd9b3-b654-44ea-9bde-1da32001e1e3",
+          "name": "BUY_X_GET_Y coupon",
+          "originalRequest": {
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n            \"active\": true,\n            \"buyXGetYRules\": [\n                {\n                    \"buyProducts\": [\n                        {\n                            \"productId\": \"019bb358-039e-74f2-94fb-1290af0f6e03\",\n                            \"quantity\": 1\n                        },\n                        {\n                            \"productId\": \"019bb238-e41e-70e3-8410-b286a9e01099\",\n                            \"quantity\": 2\n                        }\n                    ],\n                    \"getProducts\": [\n                        {\n                            \"productId\": \"019bb357-7302-70e7-85dc-b552c9cb9e46\",\n                            \"quantity\": 2\n                        }\n                    ],\n                    \"repetitionLimit\": 2\n                },\n                {\n                    \"buyProducts\": [\n                        {\n                            \"productId\": \"019bb358-039e-74f2-94fb-1290af0f6e03\",\n                            \"quantity\": 2\n                        },\n                        {\n                            \"productId\": \"019bb236-7302-70e7-85dc-b552c9cb8e25\",\n                            \"quantity\": 1\n                        }\n                    ],\n                    \"getProducts\": [\n                        {\n                            \"productId\": \"019bb145-e41e-70e3-8410-b286a9e02576\",\n                            \"quantity\": 2\n                        }\n                    ],\n                    \"repetitionLimit\": 1\n                }\n            ],\n            \"code\": \"B3G2\",\n            \"details\": \"Buy 3 Get 3 free on selected products. You will be able to use this coupon 2 times.\",\n            \"name\": \"Buy 3 Get 2\",\n            \"type\": \"BUY_X_GET_Y\",\n            \"validFrom\": \"2026-01-13T12:00:00Z\",\n            \"validTill\": \"2026-01-31T18:29:59Z\"\n        }",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/coupons/eac2ca77-d80d-4c52-96cb-1313a24075b9",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "coupons",
+                "eac2ca77-d80d-4c52-96cb-1313a24075b9"
+              ]
+            }
+          },
+          "status": "OK",
+          "code": 200,
+          "_postman_previewlanguage": null,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "key": "Transfer-Encoding",
+              "value": "chunked"
+            },
+            {
+              "key": "Date",
+              "value": "Wed, 14 Jan 2026 11:10:47 GMT"
+            },
+            {
+              "key": "Keep-Alive",
+              "value": "timeout=60"
+            },
+            {
+              "key": "Connection",
+              "value": "keep-alive"
+            }
+          ],
+          "cookie": [],
+          "body": "{\n    \"active\": true,\n    \"buyXGetYRules\": [\n        {\n            \"buyProducts\": [\n                {\n                    \"productId\": \"019bb358-039e-74f2-94fb-1290af0f6e03\",\n                    \"quantity\": 1\n                },\n                {\n                    \"productId\": \"019bb238-e41e-70e3-8410-b286a9e01099\",\n                    \"quantity\": 2\n                }\n            ],\n            \"getProducts\": [\n                {\n                    \"productId\": \"019bb357-7302-70e7-85dc-b552c9cb9e46\",\n                    \"quantity\": 2\n                }\n            ],\n            \"repetitionLimit\": 2\n        },\n        {\n            \"buyProducts\": [\n                {\n                    \"productId\": \"019bb358-039e-74f2-94fb-1290af0f6e03\",\n                    \"quantity\": 2\n                },\n                {\n                    \"productId\": \"019bb236-7302-70e7-85dc-b552c9cb8e25\",\n                    \"quantity\": 1\n                }\n            ],\n            \"getProducts\": [\n                {\n                    \"productId\": \"019bb145-e41e-70e3-8410-b286a9e02576\",\n                    \"quantity\": 2\n                }\n            ],\n            \"repetitionLimit\": 1\n        }\n    ],\n    \"code\": \"B3G2\",\n    \"details\": \"Buy 3 Get 3 free on selected products. You will be able to use this coupon 2 times.\",\n    \"id\": \"eac2ca77-d80d-4c52-96cb-1313a24075b9\",\n    \"name\": \"Buy 3 Get 2\",\n    \"type\": \"BUY_X_GET_Y\",\n    \"validFrom\": \"2026-01-13T12:00:00Z\",\n    \"validTill\": \"2026-01-31T18:29:59Z\"\n}"
+        }
+      ]
+    },
+    {
+      "name": "Delete",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Successful DELETE request\", function () {",
+              "    pm.expect(pm.response.code).to.be.oneOf([200, 202, 204]);",
+              "});",
+              ""
+            ]
+          }
+        }
+      ],
+      "id": "c95ee5cb-408b-4a6f-8b19-45630578837b",
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{base_url}}/info?id=1",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "info"
+          ],
+          "query": [
+            {
+              "key": "id",
+              "value": "1"
+            }
+          ]
+        },
+        "description": "This is a DELETE request, and it is used to delete data that was previously created via a POST request. You typically identify the entity being updated by including an identifier in the URL (eg. `id=1`).\n\nA successful DELETE request typically returns a `200 OK`, `202 Accepted`, or `204 No Content` response code."
+      },
+      "response": [
+        {
+          "id": "d4048646-54b7-4805-a967-4d8f989e18d4",
+          "name": "Delete coupon",
+          "originalRequest": {
+            "method": "DELETE",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/coupons/{{coupon_id}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "coupons",
+                "{{coupon_id}}"
+              ]
+            }
+          },
+          "status": "No Content",
+          "code": 204,
+          "_postman_previewlanguage": null,
+          "header": [
+            {
+              "key": "Date",
+              "value": "Wed, 14 Jan 2026 11:13:26 GMT"
+            },
+            {
+              "key": "Keep-Alive",
+              "value": "timeout=60"
+            },
+            {
+              "key": "Connection",
+              "value": "keep-alive"
+            }
+          ],
+          "cookie": [],
+          "body": null
+        }
+      ]
+    },
+    {
+      "name": "Applicable-Coupons",
+      "id": "b4a9b54f-75ea-45d9-a58d-dcd727da56e7",
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "method": "GET",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"items\": [\n        {\"productId\": \"019bb238-e41e-70e3-8410-b286a9e01099\", \"quantity\": 5, \"price\": 200},\n        {\"productId\": \"019bb358-039e-74f2-94fb-1290af0f6e03\", \"quantity\": 2, \"price\": 50},\n        {\"productId\": \"019bb357-7302-70e7-85dc-b552c9cb9e46\", \"quantity\": 5, \"price\": 75}\n    ]\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{base_url}}/applicable-coupons",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "applicable-coupons"
+          ]
+        }
+      },
+      "response": [
+        {
+          "id": "b8128286-e0de-4d91-bf76-f0f9ac95cd69",
+          "name": "Applicable-coupons",
+          "originalRequest": {
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"items\": [\n        {\"productId\": \"019bb238-e41e-70e3-8410-b286a9e01099\", \"quantity\": 5, \"price\": 200},\n        {\"productId\": \"019bb358-039e-74f2-94fb-1290af0f6e03\", \"quantity\": 2, \"price\": 50},\n        {\"productId\": \"019bb357-7302-70e7-85dc-b552c9cb9e46\", \"quantity\": 5, \"price\": 75}\n    ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/applicable-coupons",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "applicable-coupons"
+              ]
+            }
+          },
+          "status": "OK",
+          "code": 200,
+          "_postman_previewlanguage": null,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "key": "Transfer-Encoding",
+              "value": "chunked"
+            },
+            {
+              "key": "Date",
+              "value": "Wed, 14 Jan 2026 11:18:14 GMT"
+            },
+            {
+              "key": "Keep-Alive",
+              "value": "timeout=60"
+            },
+            {
+              "key": "Connection",
+              "value": "keep-alive"
+            }
+          ],
+          "cookie": [],
+          "body": "{\n    \"applicableCoupons\": [\n        {\n            \"couponId\": \"854fb15f-79c5-4178-9e46-0b7163c9b660\",\n            \"type\": \"CART_WISE_PERCENTAGE\",\n            \"discountAmount\": 300\n        },\n        {\n            \"couponId\": \"eac2ca77-d80d-4c52-96cb-1313a24075b9\",\n            \"type\": \"BUY_X_GET_Y\",\n            \"discountAmount\": 300\n        },\n        {\n            \"couponId\": \"22088d6c-b770-49be-a02e-749d0359ec15\",\n            \"type\": \"CART_WISE_PERCENTAGE\",\n            \"discountAmount\": 295\n        },\n        {\n            \"couponId\": \"8b66ebc3-13d7-47db-9372-dbc0c02057a6\",\n            \"type\": \"CART_WISE_FLAT_AMOUNT\",\n            \"discountAmount\": 100\n        }\n    ]\n}"
+        }
+      ]
+    }
+  ],
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "id": "82cf750e-18d3-43ef-92da-8f9f416ddf50",
+        "type": "text/javascript",
+        "requests": {},
+        "exec": [
+          ""
+        ]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "id": "0090c9fc-f423-4bf8-b5df-1d1f772a8cb8",
+        "type": "text/javascript",
+        "requests": {},
+        "exec": [
+          ""
+        ]
+      }
+    }
+  ],
+  "variable": [
+    {
+      "id": "313d0976-f4be-4f28-87b9-c727daca3e86",
+      "key": "base_url",
+      "value": "https://template.postman-echo.com"
+    }
+  ]
+}
